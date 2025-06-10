@@ -6,7 +6,7 @@ public class FuncionarioController{
 
     FuncionarioService funcionarioService = new FuncionarioService();
 
-    public void registrar(String nome, String registro) {
-        funcionarioService.registrar(nome, registro);
+    public Funcionario checkarFuncionarioExistente(String registro){
+        return funcionarioService.checkarFuncionarioExistente(registro);
     }
 }

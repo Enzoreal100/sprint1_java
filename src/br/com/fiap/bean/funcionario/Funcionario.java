@@ -3,7 +3,6 @@ package br.com.fiap.bean.funcionario;
 import java.util.UUID;
 
 public class Funcionario {
-    private final UUID id = UUID.randomUUID();
     private String nome;
     private String registro;
 
@@ -11,16 +10,13 @@ public class Funcionario {
     ) {
     }
 
-    protected UUID getId() {
-        return id;
-    }
-    protected String getNome() {
+    public String getNome() {
         return nome;
     }
     protected void setNome(String nome) {
         this.nome = nome;
     }
-    protected String getRegistro() {
+    public String getRegistro() {
         return registro;
     }
     protected void setRegistro(String registro) {
