@@ -4,6 +4,7 @@ import br.com.fiap.bean.funcionario.Funcionario;
 import br.com.fiap.bean.funcionario.FuncionarioController;
 import br.com.fiap.bean.insumo.Insumo;
 import br.com.fiap.bean.insumo.InsumoController;
+import br.com.fiap.bean.retirada.RetiradaController;
 
 import javax.swing.*;
 
@@ -26,8 +27,11 @@ public class Main {
         Insumo insumoSelecionado;
         int quantidade;
         String msg;
+        String listagemMsg;
+        boolean retiradaFeita;
         FuncionarioController funcionarioController = new FuncionarioController();
         InsumoController insumoController = new InsumoController();
+        RetiradaController retiradaController = new RetiradaController();
 
         aux = JOptionPane.showInputDialog(null, "Digite o registro do funcionário: ");
         funcionarioAtivo = funcionarioController.checkarFuncionarioExistente(aux);
@@ -36,19 +40,30 @@ public class Main {
             throw new RuntimeException("Funcionario não encontrado");
         }
         JOptionPane.showMessageDialog(null, "Bem vindo: " + funcionarioAtivo.getNome());
+        while (true) {
+            msg = "Insumos Disponíveis: \n";
+            for (Insumo insumo : insumoController.listarInsumos()) {
+                msg += String.format("Id: %s, Nome: %s, Quantidade: %d\n", insumo.getId(), insumo.getNome(), insumo.getQuantidade());
+            }
+            msg += "\nDigite o Id do insumo desejado: ";
 
-        msg = "Insumos Disponíveis: \n";
-        for (Insumo insumo: insumoController.listarInsumos()) {
-            msg += String.format("Id: %s, Nome: %s, Quantidade: %d\n", insumo.getId(), insumo.getNome(), insumo.getQuantidade());
+            aux = JOptionPane.showInputDialog(null, msg);
+            insumoSelecionado = insumoController.checkarInsumo(aux);
+            quantidade = parseInt(JOptionPane.showInputDialog(null, "Digite a quantidade desejada: "));
+
+            retiradaFeita = insumoController.retirarInsumo(insumoSelecionado.getId(), quantidade);
+            if (retiradaFeita) {
+                retiradaController.registrarRetirada(funcionarioAtivo.getRegistro(), insumoSelecionado.getId(), insumoSelecionado.getNome(), quantidade);
+            }
+            else{
+                continue;
+            }
+            int continua = JOptionPane.showConfirmDialog(null, "Deseja retirar outro insumo?");
+            if (continua == 1){
+                break;
+            }
         }
-        msg += "\nDigite o Id do insumo desejado: ";
-
-        aux = JOptionPane.showInputDialog(null, msg);
-        insumoSelecionado = insumoController.checkarInsumo(aux);
-        quantidade = parseInt(JOptionPane.showInputDialog(null, "Digite a quantidade desejada: "));
-        insumoController.retirarInsumo(insumoSelecionado.getId(), quantidade);
-        // TODO: Implementar a lista de insumos retirados
-
-
+        listagemMsg = "Retiradas feitas pelo funcionário: "+ funcionarioAtivo.getNome() + "\n" + retiradaController.listarRetiradas();
+        JOptionPane.showMessageDialog(null, listagemMsg);
     }
 }

@@ -23,7 +23,8 @@ public class InsumoController {
         return insumoService.listarInsumos();
     }
 
-    public void retirarInsumo(String id, int quantidade){
-        insumoService.retirarInsumo(id, quantidade);
+    public boolean retirarInsumo(String id, int quantidade){
+
+        return insumoService.retirarInsumo(id, quantidade);
     }
 }

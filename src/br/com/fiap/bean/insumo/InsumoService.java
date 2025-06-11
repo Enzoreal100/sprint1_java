@@ -6,7 +6,7 @@ import java.util.List;
 
 public class InsumoService {
     private List<Insumo> insumos;
-    public InsumoService() {
+    protected InsumoService() {
         this.insumos = new ArrayList<>();
         Insumo insumo1 = new Insumo();
         insumo1.setId("1");
@@ -47,22 +47,24 @@ public class InsumoService {
         return insumosFiltrados;
     }
 
-    public void retirarInsumo(String id, int quantidade){
+    public boolean retirarInsumo(String id, int quantidade){
         if (quantidade <= 0){
             JOptionPane.showMessageDialog(null, "Quantidade inválida");
-            return;
+            return false;
         }
         for(Insumo insumoAux: this.insumos) {
             if (insumoAux.getId().equals(id)){
                 if (insumoAux.getQuantidade() < quantidade){
                     JOptionPane.showMessageDialog(null, "Quantidade indisponível");
-                    return;
+                    return false;
                 }
-                insumoAux.setQuantidade(-(quantidade));
+                int quantidadeInicial = insumoAux.getQuantidade();
+                insumoAux.setQuantidade(quantidadeInicial-quantidade);
                 JOptionPane.showMessageDialog(null, "Insumo " + insumoAux.getNome() + "registrado para retirada");
-                return;
+                return true;
             }
         }
         JOptionPane.showMessageDialog(null, "Insumo Inexistente");
+        return false;
     }
 }
