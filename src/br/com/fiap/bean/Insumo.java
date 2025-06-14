@@ -50,7 +50,7 @@ public class Insumo {
             if (quantidadeRetirada > 1 ){
                 if (quantidadeRetirada <= insumo.getQuantidade()){
                     int quantidadeAntes = insumo.getQuantidade();
-                    int quantidadeDepois = quantidadeRetirada - quantidadeAntes;
+                    int quantidadeDepois = quantidadeAntes - quantidadeRetirada;
                     insumo.setQuantidade(quantidadeDepois);
                     Atualizacao atualizacao = new Atualizacao(insumo, quantidadeRetirada, LocalDate.now(), funcionario.getNome());
                     return atualizacao;
@@ -66,12 +66,12 @@ public class Insumo {
     public Atualizacao atualizar(Insumo insumo, Estoquista funcionario){
         try{
             String aux = JOptionPane.showInputDialog("Qual a quantidade que deseja retirar de " + insumo.getNome());
-            int quantidadeRetirada = parseInt(aux);
-            if (quantidadeRetirada > 0 ){
+            int quantidadeReposta = parseInt(aux);
+            if (quantidadeReposta > 0 ){
                 int quantidadeAntes = insumo.getQuantidade();
-                int quantidadeDepois = quantidadeRetirada + quantidadeAntes;
+                int quantidadeDepois = quantidadeReposta + quantidadeAntes;
                 insumo.setQuantidade(quantidadeDepois);
-                Atualizacao atualizacao = new Atualizacao(insumo, quantidade, LocalDate.now(), funcionario.getNome());
+                Atualizacao atualizacao = new Atualizacao(insumo, quantidadeReposta, LocalDate.now(), funcionario.getNome());
                 return atualizacao;
             }
             throw new Exception("O valor deve ser maior que 0!");
