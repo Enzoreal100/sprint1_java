@@ -19,7 +19,7 @@ public class Main {
             if (aux.equals(enfermeiroAtivo.getIdFuncionario())){
                 funcionario = enfermeiroAtivo;
                 JOptionPane.showMessageDialog(null, "Bem vindo: " + funcionario.getNome());
-                String escolha = funcionario.menu(insumo1, insumo2);
+                String escolha = enfermeiroAtivo.menu(insumo1, insumo2);
                 if (escolha.equals(insumo1.getIdInsumo())) {
                     insumoEscolhido = insumo1;
                 } else if (escolha.equals(insumo2.getIdInsumo())){
